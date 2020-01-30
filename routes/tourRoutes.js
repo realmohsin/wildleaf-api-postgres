@@ -18,3 +18,5 @@ router.route('/tour-stats').get()
 router.route('/monthly-tour-starts/:year').get()
 
 router.route('/top-5-cheap').get()
+
+module.exports = router
