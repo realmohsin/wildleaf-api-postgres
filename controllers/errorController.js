@@ -1,11 +1,12 @@
-const { logError } = require('./utils/consoleLog')
+const { logError } = require('../utils/consoleLog')
+const AppError = require('../utils/AppError')
 
 const sendDevError = (err, res) => {
   const statusCode = err instanceof AppError ? err.statusCode : 500
   const status = err instanceof AppError ? 'failure' : 'error'
 
   res.status(statusCode).json({
-    data: 'Development Error Report',
+    title: 'Error in Development',
     status,
     error: err,
     message: err.message,
