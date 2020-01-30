@@ -2,7 +2,6 @@ const { log } = require('../utils/consoleLog')
 const withCatch = require('../utils/withCatch')
 
 exports.queryAllTours = withCatch(async (req, res, next) => {
-  throw new Error()
   log(JSON.stringify(req.query, null, 2))
   log(JSON.stringify(req.body, null, 2))
   res.status(200).json({
