@@ -9,10 +9,10 @@ exports.log = msg => {
 }
 
 exports.logError = msg => {
-  console.log('💥💥💥', chalk.red('ERROR'), '💥💥💥')
+  console.error('💥💥💥', chalk.red('ERROR'), '💥💥💥')
   if (msg instanceof Error) {
-    console.log(chalk.red(msg.stack))
+    console.error(chalk.red(msg.stack))
   } else {
-    console.log(chalk.red(msg))
+    console.error(chalk.red(msg))
   }
 }
