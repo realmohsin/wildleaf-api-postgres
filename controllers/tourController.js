@@ -16,43 +16,43 @@ exports.queryAllTours = withCatch(async (req, res, next) => {
   })
 })
 
-exports.addNewTour = (req, res, next) => {
+exports.addNewTour = withCatch(async (req, res, next) => {
   res.status(201).json({
     status: 'success',
     data: {
       tour: {}
     }
   })
-}
+})
 
-exports.getTourStats = (req, res, next) => {
+exports.getTourStats = withCatch(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
       stats: {}
     }
   })
-}
+})
 
-exports.getMonthlyTourStarts = (req, res, next) => {
+exports.getMonthlyTourStarts = withCatch(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
       getMonthlyTourStarts: {}
     }
   })
-}
+})
 
-exports.getTopTours = (req, res, next) => {
+exports.getTopTours = withCatch(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
       tours: []
     }
   })
-}
+})
 
-exports.getTour = (req, res, next) => {
+exports.getTour = withCatch(async (req, res, next) => {
   log(req.params)
 
   res.status(200).json({
@@ -62,20 +62,20 @@ exports.getTour = (req, res, next) => {
       reqParams: req.params
     }
   })
-}
+})
 
-exports.updateTour = (req, res, next) => {
+exports.updateTour = withCatch(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
       tour: {}
     }
   })
-}
+})
 
-exports.deleteTour = (req, res, next) => {
+exports.deleteTour = withCatch(async (req, res, next) => {
   res.status(204).json({
     status: 'success',
     data: null
   })
-}
+})
