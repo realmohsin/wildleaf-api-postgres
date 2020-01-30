@@ -33,14 +33,14 @@ exports.getTourStats = withCatch(async (req, res, next) => {
   })
 })
 
-exports.getMonthlyTourStarts = withCatch(async (req, res, next) => {
-  res.status(200).json({
-    status: 'success',
-    data: {
-      getMonthlyTourStarts: {}
-    }
-  })
-})
+// exports.getMonthlyTourStarts = withCatch(async (req, res, next) => {
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       getMonthlyTourStarts: {}
+//     }
+//   })
+// })
 
 exports.getTopTours = withCatch(async (req, res, next) => {
   res.status(200).json({
