@@ -1,13 +1,8 @@
 const express = require('express')
+const tourRouter = require('./routes/tourRoutes')
 
 const app = express()
 
-app.route('/').get((req, res) => {
-  res.send('🍂 wildleaf-api-postgres')
-})
-
-app.route('*').all((req, res) => {
-  res.send('💥 404 💥')
-})
+app.use(tourRouter)
 
 module.exports = app
