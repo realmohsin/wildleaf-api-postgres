@@ -28,10 +28,12 @@ exports.addNewTour = withCatch(async (req, res, next) => {
 })
 
 exports.getTourStats = withCatch(async (req, res, next) => {
+  const stats = await Tour.aggregateStats()
+
   res.status(200).json({
     status: 'success',
     data: {
-      stats: {}
+      stats
     }
   })
 })

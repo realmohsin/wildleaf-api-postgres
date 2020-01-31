@@ -102,7 +102,12 @@ class Tour {
     }
   }
 
-  static aggregateStats () {}
+  static async aggregateStats () {
+    const sqlText =
+      'SELECT difficulty, COUNT(*) AS "numOfTours", SUM(ratingsQuantity) AS "numOfRatings", AVG(ratingsAverage) AS "ratingsAverage", AVG(price) AS "averagePrice" FROM tours GROUP BY difficulty ORDER BY AVG(ratingsAverage) DESC'
+    const dbRes = await db.query(sqlText)
+    return dbRes.rows
+  }
 }
 
 module.exports = Tour
