@@ -66,7 +66,30 @@ class Tour {
     return tour
   }
 
-  static getByIdAndUpdate () {}
+  static async getByIdAndUpdate (tour_id, updates) {
+    const sqlValues = [tour_id]
+    const updateKeys = Object.keys(updates)
+    let sqlInjection = ''
+    let injectionNum = 2
+
+    for (let i = 0; i < updateKeys.length; i++) {
+      sqlInjection += `${updateKeys[i]}=$${injectionNum}${
+        i === updateKeys.length - 1 ? '' : ','
+      } `
+      sqlValues.push(updates[updateKeys[i]])
+      injectionNum = injectionNum + 1
+    }
+
+    const sqlText = `UPDATE tours SET ${sqlInjection}WHERE tour_id=$1;`
+    const dbRes = await db.query(sqlText, sqlValues)
+
+    if (dbRes.rowCount === 0) {
+      throw new AppError('Resource cound not be found', 404)
+    }
+
+    const tour = await this.getById(tour_id)
+    return tour
+  }
 
   static async getByIdAndDelete (tour_id) {
     const sqlText = 'DELETE FROM tours WHERE tour_id=$1'
