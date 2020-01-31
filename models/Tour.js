@@ -52,7 +52,17 @@ class Tour {
     return this
   }
 
-  static queryAllTours (reqQuery) {}
+  static async queryAllTours (reqQuery) {
+    let sqlText
+    let sqlValues
+    const reqQueryKeys = Object.keys(reqQuery)
+    if (reqQueryKeys.length === 0) {
+      sqlText = 'SELECT * FROM tours'
+    }
+    const dbRes = await db.query(sqlText, sqlValues)
+    const tours = dbRes.rows
+    return tours
+  }
 
   static async getById (tour_id) {
     const sqlText = 'SELECT * FROM tours WHERE tour_id=$1'

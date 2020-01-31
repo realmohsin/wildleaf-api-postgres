@@ -3,14 +3,13 @@ const withCatch = require('../utils/withCatch')
 const Tour = require('../models/Tour')
 
 exports.queryAllTours = withCatch(async (req, res, next) => {
+  const tours = await Tour.queryAllTours(req.query)
+
   res.status(200).json({
     status: 'success',
-    results: 0,
+    results: tours.length,
     data: {
-      tours: [],
-      reqQuery: req.query,
-      reqBody: req.body,
-      dogs
+      tours
     }
   })
 })
