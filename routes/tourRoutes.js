@@ -10,9 +10,8 @@ router
 
 router.route('/api/v1/tours/tour-stats').get(tourController.getTourStats)
 
-router
-  .route('/api/v1/tours/monthly-tour-starts/:year')
-  .get(tourController.getMonthlyTourStarts)
+router.route('/api/v1/tours/monthly-tour-starts/:year')
+// .get(tourController.getMonthlyTourStarts)
 
 router.route('/api/v1/tours/top-5-cheap').get(tourController.getTopTours)
 

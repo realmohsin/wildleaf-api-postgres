@@ -29,12 +29,18 @@ const sendProdError = (err, res) => {
   }
 }
 
-const errorController = (err, req, res, next) => {
+const errorController = (origError, req, res, next) => {
   const env = process.env.NODE_ENV
+
+  let newError
+  if (origError.code === '23505') {
+    newError = new AppError('That resource already exists', 400)
+  }
+
   if (env === 'development') {
-    sendDevError(err, res)
+    sendDevError(origError, res)
   } else if (env === 'production') {
-    sendProdError(err, res)
+    sendProdError(newError || origError, res)
   }
 }
 
