@@ -1,5 +1,4 @@
 const db = require('../database')
-const { log } = require('../utils/consoleLog')
 const AppError = require('../utils/AppError')
 
 class Tour {
@@ -53,12 +52,56 @@ class Tour {
   }
 
   static async queryAllTours (reqQuery) {
-    let sqlText
-    let sqlValues
-    const reqQueryKeys = Object.keys(reqQuery)
-    if (reqQueryKeys.length === 0) {
-      sqlText = 'SELECT * FROM tours'
+    const query = { ...reqQuery }
+
+    let sqlText = 'SELECT * FROM tours'
+    let sqlValues = []
+
+    let { sort, fields, page, limit } = query
+
+    sort && delete query.sort
+    fields && delete query.fields
+    page && delete query.page
+    limit && delete query.limit
+
+    const queryKeys = Object.keys(query)
+
+    if (queryKeys.length) {
+      let filterInjection = ' WHERE '
+      for (let i = 0; i < queryKeys.length; i++) {
+        filterInjection += `${queryKeys[i]}=$${i + 1}${
+          i === queryKeys.length - 1 ? '' : ' AND '
+        }`
+        sqlValues.push(query[queryKeys[i]])
+      }
+      sqlText += filterInjection
     }
+
+    if (fields) {
+      const fieldsAdjusted = fields.split(',').join(', ')
+      sqlText = sqlText.replace('*', fieldsAdjusted)
+    }
+
+    if (sort) {
+      let desc = sort.startsWith('-')
+      if (desc) {
+        sort = sort.slice(1)
+      }
+      const sortAdjusted = sort.split(',').join(', ')
+      let sortInjection = ` ORDER BY ${sortAdjusted}${desc ? ' DESC' : ''}`
+      sqlText += sortInjection
+    }
+
+    if (limit !== undefined) {
+      let limitInjection = ` LIMIT ${limit}`
+      sqlText += limitInjection
+    }
+
+    if (page !== undefined && page > 0 && limit !== undefined) {
+      let pageInjection = ` OFFSET ${(page - 1) * limit}`
+      sqlText += pageInjection
+    }
+
     const dbRes = await db.query(sqlText, sqlValues)
     const tours = dbRes.rows
     return tours
